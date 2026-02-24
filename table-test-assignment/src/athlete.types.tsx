@@ -1,0 +1,26 @@
+export type Athlete = {
+  id: number;
+  athleteCode: string;
+  firstName: string;
+  lastName: string;
+  gender: "Male" | "Female" | "Other";
+  age: number;
+  dateOfBirth: string;
+  country: string;
+  sport: string;
+  position: string;
+  team: string;
+  ranking: number;
+  medals: number;
+  matchesPlayed: number;
+  wins: number;
+  losses: number;
+  winRate: number;
+  heightCm: number;
+  weightKg: number;
+  yearsPro: number;
+  salaryUsd: number;
+  isOlympian: boolean;
+  status: "Active" | "Suspended" | "Retired" | "Injured";
+  lastUpdated: string;
+};
