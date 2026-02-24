@@ -1,0 +1,23 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.headerRow {
+  border-bottom: 2px solid grey;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.headerRow th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;;
+  white-space: nowrap;
+  border-right: 1px solid grey;
+}
+
+.headerRow th:last-child {
+  border-right: none;
+}
