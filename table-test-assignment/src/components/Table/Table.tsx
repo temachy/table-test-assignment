@@ -1,9 +1,11 @@
-import { useMemo, useRef, useState } from "react";
+import { useRef } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import type { Athlete } from "../../types/athlete.types";
 import Row from "../Row";
 import styles from "./Table.module.css";
 import { HeaderCell } from "./components";
+import { useSearch } from "./hooks/useSearch";
+import { useSort } from "./hooks/useSort";
 
 type TableProps = {
   data: Athlete[];
@@ -34,48 +36,14 @@ const HEADERS = [
   { name: "lastUpdated", label: "Last Updated" },
 ];
 
-const useSort = (data: Athlete[]) => {
-  const [activeSort, setActiveSort] = useState<{
-    column: string;
-    direction: "asc" | "desc";
-  } | null>(null);
-
-  const onSortSelect = (column: string) => () => {
-    setActiveSort((prev) => {
-      if (prev?.column === column) {
-        if (prev.direction === "asc") {
-          return { column, direction: "desc" };
-        }
-        return null;
-      }
-      return { column, direction: "asc" };
-    });
-  };
-
-  const sortedTrips = useMemo(() => {
-    if (!activeSort) return data;
-
-    const sorted = [...data].sort((a, b) => {
-      const aValue = a[activeSort.column as keyof Athlete];
-      const bValue = b[activeSort.column as keyof Athlete];
-      if (aValue < bValue) return activeSort.direction === "asc" ? -1 : 1;
-      if (aValue > bValue) return activeSort.direction === "asc" ? 1 : -1;
-      return 0;
-    });
-
-    return sorted;
-  }, [data, activeSort]);
-
-  return { activeSort, onSortSelect, sortedTrips };
-};
-
 const Table = ({ data }: TableProps) => {
   const parentRef = useRef(null);
 
-  const { activeSort, onSortSelect, sortedTrips } = useSort(data);
+  const { activeSort, onSortSelect, sortedAthletes } = useSort(data);
+  const { search, onSearch, filteredAthletes } = useSearch(sortedAthletes);
 
   const rowVirtualizer = useVirtualizer({
-    count: sortedTrips.length,
+    count: filteredAthletes.length,
     getScrollElement: () => parentRef.current,
     estimateSize: () => 35,
   });
@@ -87,20 +55,26 @@ const Table = ({ data }: TableProps) => {
           {HEADERS.map((header) => (
             <HeaderCell
               key={header.name}
+              name={header.name}
               label={header.label}
-              onSortSelect={onSortSelect(header.name)}
+              onSortSelect={onSortSelect}
               sortValue={
                 activeSort?.column === header.name
                   ? activeSort.direction
                   : undefined
               }
+              onSearch={onSearch}
+              searchValue={search[header.name]}
             />
           ))}
         </tr>
       </thead>
       <tbody ref={parentRef} className={styles.tableBody}>
         {rowVirtualizer.getVirtualItems().map((virtualItem) => (
-          <Row key={virtualItem.index} data={sortedTrips[virtualItem.index]} />
+          <Row
+            key={virtualItem.index}
+            data={filteredAthletes[virtualItem.index]}
+          />
         ))}
       </tbody>
     </table>
