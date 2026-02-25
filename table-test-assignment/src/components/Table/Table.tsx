@@ -14,7 +14,7 @@ const Table = ({ data }: TableProps) => {
   const rowVirtualizer = useVirtualizer({
     count: data.length,
     getScrollElement: () => parentRef.current,
-    estimateSize: () => 65,
+    estimateSize: () => 35,
   });
 
   return (
