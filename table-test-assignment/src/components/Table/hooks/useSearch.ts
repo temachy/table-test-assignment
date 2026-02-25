@@ -1,8 +1,10 @@
-import { useMemo, useState } from "react";
+import { useDeferredValue, useMemo, useState } from "react";
 import type { Athlete } from "../../../types/athlete.types";
 
 export const useSearch = (data: Athlete[]) => {
   const [search, setSearch] = useState<Record<string, string>>({});
+
+  const deferredSearch = useDeferredValue(search);
 
   const onSearch = (column: string, value: string) => {
     const updatedSearch = { ...search };
@@ -16,17 +18,17 @@ export const useSearch = (data: Athlete[]) => {
   };
 
   const filteredAthletes = useMemo(() => {
-    if (Object.keys(search).length === 0) return data;
+    if (Object.keys(deferredSearch).length === 0) return data;
 
     return data.filter((athlete) =>
-      Object.entries(search).every(([column, searchValue]) => {
+      Object.entries(deferredSearch).every(([column, searchValue]) => {
         const athleteValue = String(
           athlete[column as keyof Athlete] || "",
         ).toLowerCase();
         return athleteValue.includes(searchValue.toLowerCase());
       }),
     );
-  }, [data, search]);
+  }, [data, deferredSearch]);
 
   return { search, onSearch, filteredAthletes };
 };
