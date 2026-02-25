@@ -13,6 +13,7 @@ const Row = ({ data }: RowProps) => (
     <Cell value={data.firstName} />
     <Cell value={data.lastName} />
     <Cell value={data.gender} />
+    <Cell value={data.dateOfBirth} />
     <Cell value={data.age} />
     <Cell value={data.country} />
     <Cell value={data.sport} />
@@ -24,8 +25,11 @@ const Row = ({ data }: RowProps) => (
     <Cell value={data.winRate} />
     <Cell value={data.heightCm} />
     <Cell value={data.weightKg} />
+    <Cell value={data.yearsPro} />
     <Cell value={data.salaryUsd} />
+    <Cell value={data.isOlympian} />
     <Cell value={data.status} />
+    <Cell value={data.lastUpdated} />
   </tr>
 );
 
