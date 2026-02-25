@@ -1,6 +1,7 @@
 .table {
   width: 100%;
   border-collapse: collapse;
+  background-color: white;
 }
 
 .headerRow {
@@ -21,4 +22,9 @@
   font-weight: 600;
   white-space: nowrap;
   border-right: 1px solid grey;
+}
+
+.tableBody {
+  overflow: auto;
+  height: 400px;
 }
