@@ -1,4 +1,4 @@
-import type { Athlete } from "../../types/athlete.types";
+import type { Athlete } from "../../../../types/athlete.types";
 import Cell from "../Cell";
 import styles from "./Row.module.css";
 

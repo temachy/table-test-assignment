@@ -22,13 +22,18 @@ const HeaderCell = ({
     <div className={styles.headerCell}>
       <p>{label}</p>
 
-      <button onClick={() => onSortSelect(name)} className={styles.sortButton}>
+      <button
+        aria-label="Sort"
+        onClick={() => onSortSelect(name)}
+        className={styles.btn}
+      >
         <SortUpSvg color={sortValue === "asc" ? "blue" : "black"} />
         <SortDownSvg color={sortValue === "desc" ? "blue" : "black"} />
       </button>
       <button
+        aria-label="Filters"
         popoverTarget={`filters-popover-${name}`}
-        className={styles.sortButton}
+        className={styles.btn}
       >
         <FilterSvg color={searchValue ? "blue" : "black"} />
       </button>

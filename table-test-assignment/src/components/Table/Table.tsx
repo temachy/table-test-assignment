@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import type { Athlete } from "../../types/athlete.types";
-import Row from "../Row";
+import { Row } from "./components";
 import styles from "./Table.module.css";
 import { HeaderCell } from "./components";
 import { useSearch } from "./hooks/useSearch";
